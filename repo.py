@@ -1,42 +1,35 @@
-# Testing the repo
-# from repo import create_employee,read_all_employee,read_by_id,update,delete_employee
-import  repo
+Employees=[] # [(Id,Name,Age,Salary,is_active)]
 
-#Create 
-employee=(101,'Banu',23,50000,True)
-repo.create_employee(employee)
-print(f'Employee {employee[1]} Creates Successfully')
-print('After Add :',repo.read_all_employee())
+#  CRUD : CReate,Update,Read,Delete
 
-employee = (102,'Manu', 23, 30000, True)
-repo.create_employee(employee)
-print(f'EMployee {employee[1]} Created Successfully')
-print('After Add :',repo.read_all_employee())
-
-
-# test Read by Id 
-employee=repo.read_by_id(102)
-if employee==None:
-    print('Employee Not Found')
-else:
-    print(employee)
+def create_employee(employee):
+    global Employees
+    Employees.append(employee)
     
-# test update 
-employee_to_update = repo.read_by_id(102)
+def read_all_employee():
+    return Employees
 
-if employee_to_update is None:
-    print('Employee Not Found')
-else:
-    id, name, age, salary, is_active = employee_to_update
-    salary += 20000  # Increase salary
-    updated_employee = (id, name, age, salary, is_active)
-    repo.update(102, updated_employee)
-    print(f'Employee {id} Updated Successfully')
-    print('After Update:', repo.read_all_employee())
+def read_by_id(id):
+    for employee in Employees:
+        if employee[0]==id:
+            return employee
+    return None
 
-# test delete
-
-repo.delete_employee(102)
-print('After Delete:',repo.read_all_employee())
+def update(id,new_employee):
+    I=0
+    for employee in Employees:
+        if employee[0]==id:
+            Employees[I]==new_employee
+            break
+        I+=1        
         
-# Make us app
+def delete_employee(id):
+    index=-1
+    I=0
+    for employee in Employees:
+        if employee[0]==id:
+            index=I
+            break
+        I+=1
+    if index !=-1:
+         Employees.pop(index)
