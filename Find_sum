@@ -1,0 +1,10 @@
+def find_sum(first, second):
+    result = first + second
+    return result
+
+res= find_sum(10,20)
+print(res)
+
+res2=find_sum(10.5,11.5)
+print(res2)
+ghgjgj = input()
