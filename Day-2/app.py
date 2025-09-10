@@ -1,42 +1,72 @@
-# Testing the repo
-# from repo import create_employee,read_all_employee,read_by_id,update,delete_employee
-import  repo
 
-#Create 
-employee=(101,'Banu',23,50000,True)
-repo.create_employee(employee)
-print(f'Employee {employee[1]} Creates Successfully')
-print('After Add :',repo.read_all_employee())
+import repo_inmem_dic as repo
 
-employee = (102,'Manu', 23, 30000, True)
-repo.create_employee(employee)
-print(f'EMployee {employee[1]} Created Successfully')
-print('After Add :',repo.read_all_employee())
+def menu():
+    message = '''
+Options are:
+1 - Create Employee
+2 - List All Employees
+3 - Read Employee By Id
+4 - Update Employee
+5 - Delete Employee
+6 - Exit 
+Your Option:'''
+    choice = int(input(message))
+    if choice == 1:
+        id = int(input('ID:'))
+        name = input('Name:')
+        age = int(input('Age:'))
+        salary = float(input('Salary:'))
+        is_active = (input('Active(y/n):').upper() == 'Y')
 
+        employee = {'id':id, 'name':name, 'age':age, 
+                    'salary':salary, 'is_active':is_active}
 
-# test Read by Id 
-employee=repo.read_by_id(102)
-if employee==None:
-    print('Employee Not Found')
-else:
-    print(employee)
+        repo.create_employee(employee)
+
+        print('Employee Created Successfully.')
+    elif choice == 2:
+        print('List of Employees:')
+        for employee in repo.read_all_employee():
+            print(employee)
+    elif choice == 3:
+        id = int(input('ID:'))
+        employee = repo.read_by_id(id)
+        if employee == None:
+            print('Employee not found.')
+        else:
+            print(employee)
+    elif choice == 4:
+        id = int(input('ID:'))
+        employee = repo.read_by_id(id)
+        if employee == None: 
+            print('Employee Not Found')
+        else:
+            print(employee)
+            salary = float(input('New Salary:'))
+            new_employee = {'id':employee['id'], 
+                'name':employee['name'], 
+                'age':employee['age'], 
+                'salary':salary, 
+                'is_active':employee['is_active']}
+            repo.update(id, new_employee)
+            print('Employee updated successfully.')
+    elif choice == 5:
+        id = int(input('ID:'))
+        employee = repo.read_by_id(id)
+        if employee == None: 
+            print('Employee Not Found')
+        else:
+            repo.delete_employee(id)
+            print('Employee Deleted Succesfully.')
+    elif choice == 6: 
+        print('Thank you for using Application')
+
+    return choice 
+
+def menus():
+    choice = menu()
+    while choice != 6:
+        choice = menu()
     
-# test update 
-employee_to_update = repo.read_by_id(102)
-
-if employee_to_update is None:
-    print('Employee Not Found')
-else:
-    id, name, age, salary, is_active = employee_to_update
-    salary += 20000  # Increase salary
-    updated_employee = (id, name, age, salary, is_active)
-    repo.update(102, updated_employee)
-    print(f'Employee {id} Updated Successfully')
-    print('After Update:', repo.read_all_employee())
-
-# test delete
-
-repo.delete_employee(102)
-print('After Delete:',repo.read_all_employee())
-        
-# Make us app
+menus()
