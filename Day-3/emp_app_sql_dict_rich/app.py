@@ -9,63 +9,103 @@ Options are:
 4 - Update Employee
 5 - Delete Employee
 6 - Exit 
-Your Option:'''
-    choice = int(input(message))
+Your Option: '''
+    
+    try:
+        choice = int(input(message))
+    except ValueError:
+        print("Invalid input! Please enter a number between 1 and 6.")
+        return None
+    
     if choice == 1:
-        id = int(input('ID:'))
-        name = input('Name:')
-        age = int(input('Age:'))
-        salary = float(input('Salary:'))
-        is_active = (input('Active(y/n):').upper() == 'Y')
+      
+            id = int(input('ID: '))
+            name = input('Name: ')
+            age = int(input('Age: '))
+            salary = float(input('Salary: '))
+            is_active = input('Active (y/n): ').strip().lower().startswith('y')
 
-        employee = {'id':id, 'name':name, 'age':age, 
-                    'salary':salary, 'is_active':is_active}
+            employee = {'id': id, 'name': name, 'age': age, 
+                        'salary': salary, 'is_active': is_active}
+            
+            try:
+                repo.create_employee(employee)
+                print('Employee Created Successfully.')
+            
+            except repo.EmpoyeeAlreadyExistError as ex:
+                print(f'Duplicated Employee ID:{ex}')
+                
+            except repo.DatabaseError as ex:
+                print(f'Database Error in creating exmployee:{ex}')  
+                          
+        
+            
 
-        repo.create_employee(employee)
-
-        print('Employee Created Successfully.')
     elif choice == 2:
         print('List of Employees:')
-        for employee in repo.read_all_employee():
-            print(employee)
-    elif choice == 3:
-        id = int(input('ID:'))
-        employee = repo.read_by_id(id)
-        if employee == None:
-            print('Employee not found.')
+        employees = repo.read_all_employee()
+        if not employees:
+            print("No employees found.")
         else:
-            print(employee)
-    elif choice == 4:
-        id = int(input('ID:'))
-        employee = repo.read_by_id(id)
-        if employee == None: 
-            print('Employee Not Found')
-        else:
-            print(employee)
-            salary = float(input('New Salary:'))
-            new_employee = {'id':employee['id'], 
-                'name':employee['name'], 
-                'age':employee['age'], 
-                'salary':salary, 
-                'is_active':employee['is_active']}
-            repo.update(id, new_employee)
-            print('Employee updated successfully.')
-    elif choice == 5:
-        id = int(input('ID:'))
-        employee = repo.read_by_id(id)
-        if employee == None: 
-            print('Employee Not Found')
-        else:
-            repo.delete_employee(id)
-            print('Employee Deleted Succesfully.')
-    elif choice == 6: 
-        print('Thank you for using Application')
+            for employee in employees:
+                print(employee)
 
-    return choice 
+    elif choice == 3:
+        try:
+            id = int(input('ID: '))
+            employee = repo.read_by_id(id)
+            if employee is None:
+                print('Employee not found.')
+            else:
+                print(employee)
+        except ValueError:
+            print("Invalid ID input.")
+
+    elif choice == 4:
+        try:
+            id = int(input('ID: '))
+            employee = repo.read_by_id(id)
+            if employee is None:
+                print('Employee Not Found')
+            else:
+                print(employee)
+                salary = float(input('New Salary: '))
+                new_employee = {
+                    'id': employee['id'],
+                    'name': employee['name'],
+                    'age': employee['age'],
+                    'salary': salary,
+                    'is_active': employee['is_active']
+                }
+                repo.update(id, new_employee)
+                print('Employee updated successfully.')
+        except ValueError:
+            print("Invalid input.")
+
+    elif choice == 5:
+        try:
+            id = int(input('ID: '))
+            employee = repo.read_by_id(id)
+            if employee is None:
+                print('Employee Not Found')
+            else:
+                repo.delete_employee(id)
+                print('Employee Deleted Successfully.')
+        except ValueError:
+            print("Invalid input.")
+
+    elif choice == 6:
+        print('Thank you for using Application.')
+
+    else:
+        print("Please select a valid option (1-6).")
+
+    return choice
 
 def menus():
-    choice = menu()
+    choice = None
     while choice != 6:
         choice = menu()
-    
-menus()
+
+if __name__ == "__main__":
+    menus()
