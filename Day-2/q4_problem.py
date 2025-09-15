@@ -1,8 +1,8 @@
 names = input("Enter names separated by spaces: ").split()
 names.sort()
 names_tuple = tuple(names)
-with open("names_data.txt", "w") as f:
+with open("names_data.txt", "w", encoding="utf-8") as f:
     f.write(str(names) + "\n")
     f.write(str(names_tuple) + "\n")
-with open("names_data.txt", "r") as f:
+with open("names_data.txt", "r", encoding="utf-8") as f:
     print(f.read())

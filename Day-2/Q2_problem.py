@@ -8,12 +8,12 @@ print(num_sum)
 print(num_avg)
 
 file_name = 'numbers_data.txt'
-with open(file_name, 'w') as writer:
+with open(file_name, 'w', encoding='utf-8') as writer:
     writer.write(f'List: {numbers_list}\n')
     writer.write(f'Sum: {num_sum}\n')
     writer.write(f'Average: {num_avg}')
 
-with open(file_name, 'r') as reader:
+with open(file_name, 'r', encoding='utf-8') as reader:
     line_list = reader.readline()
     line_sum = reader.readline()
     line_avg = reader.readline()

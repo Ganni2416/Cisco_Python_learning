@@ -7,11 +7,11 @@ print(words_list)
 print(words_tuple)
 
 file_name = 'words.txt'
-with open(file_name, 'w') as writer:
+with open(file_name, 'w', encoding='utf-8') as writer:
     writer.write(f'List: {words_list}\n')
     writer.write(f'Tuple: {words_tuple}')
 
-with open(file_name, 'r') as reader:
+with open(file_name, 'r', encoding='utf-8') as reader:
     line_list = reader.readline()
     line_tuple = reader.readline()
     print(line_list)

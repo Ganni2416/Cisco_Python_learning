@@ -13,7 +13,7 @@ Your Option: '''
     choice = int(input(message))
 
     if choice == 1:
-        id = int(input('Flight ID: '))
+        flight_id = int(input('Flight ID: '))
         number = input('Flight Number: ')
         airline_name = input('Airline Name: ')
         seats = int(input('Total Seats: '))
@@ -22,7 +22,7 @@ Your Option: '''
         destination = input('Destination: ')
 
         flight = {
-            'id': id,
+            'id': flight_id,
             'number': number,
             'airline_name': airline_name,
             'seats': seats,
@@ -40,16 +40,16 @@ Your Option: '''
             print(flight)
 
     elif choice == 3:
-        id = int(input('Flight ID: '))
-        flight = repo.read_flight_by_id(id)
+        flight_id = int(input('Flight ID: '))
+        flight = repo.read_flight_by_id(flight_id)
         if flight:
             print('Flight Details:', flight)
         else:
             print('Flight not found.')
 
     elif choice == 4:
-        id = int(input('Flight ID to Update: '))
-        flight = repo.read_flight_by_id(id)
+        flight_id = int(input('Flight ID to Update: '))
+        flight = repo.read_flight_by_id(flight_id)
         if flight:
             print('Current Data:', flight)
             price = float(input('New Ticket Price: '))
@@ -62,16 +62,16 @@ Your Option: '''
                 'source': flight['source'],
                 'destination': flight['destination']
             }
-            repo.update_flight(id, updated_flight)
+            repo.update_flight(flight_id, updated_flight)
             print('Flight Updated Successfully.')
         else:
             print('Flight not found.')
 
     elif choice == 5:
-        id = int(input('Flight ID to Delete: '))
-        flight = repo.read_flight_by_id(id)
+        flight_id = int(input('Flight ID to Delete: '))
+        flight = repo.read_flight_by_id(flight_id)
         if flight:
-            repo.delete_flight(id)
+            repo.delete_flight(flight_id)
             print('Flight Deleted Successfully.')
         else:
             print('Flight not found.')

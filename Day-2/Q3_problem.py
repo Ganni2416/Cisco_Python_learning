@@ -3,13 +3,13 @@ word_list = sentence.split()
 word_tuple = tuple(word.upper() for word in word_list)
 
 filename = "sentence_data.txt"
-with open(filename, "w") as file:
+with open(filename, "w", encoding="utf-8") as file:
     file.write("List: " + str(word_list) + "\n")
     file.write("Tuple: " + str(word_tuple) + "\n")
 
 print(f"Data saved to {filename}")
 
 print("\nReading back from file:")
-with open(filename, "r") as file:
+with open(filename, "r", encoding="utf-8") as file:
     content = file.read()
     print(content)
